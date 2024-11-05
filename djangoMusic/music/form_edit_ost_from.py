@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from .fields import *
 from .validate_data import validate_data
-from .edit_ost_from import edit_ost_from
+from .edit import edit_ost_from
 from .redirect_ import redirect_
 from .OSTFrom import OSTFrom
 from .format_td import format_td

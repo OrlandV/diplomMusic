@@ -1,0 +1,13 @@
+{% extends "add.html" %}{% block oms_rpp_links %}
+    <table class="full">
+        <tr>
+            <td>
+{% include "form_oms.html" %}
+            </td>
+            <td>
+{% include "form_rpp.html" %}
+            </td>
+            <td class="cnt">{% block links1 %}{% include "links.html" %}{% endblock %}
+            </td>
+        </tr>
+    </table>{% endblock %}{% block links %}{% include "links.html" %}{% endblock %}{% block sub_back %}{% endblock %}

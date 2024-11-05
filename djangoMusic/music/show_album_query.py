@@ -1,5 +1,5 @@
-from .fields import find_field
 from .album_query import get_album_query
+from .fields import find_field
 
 
 def get_show_album_query(cf: list, _get) -> dict:

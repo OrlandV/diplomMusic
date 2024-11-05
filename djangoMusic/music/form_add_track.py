@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from .fields import *
 from .validate_data import validate_data
-from .add_track import add_track
+from .add import add_track
 from .get_param import get_param
 from .sub_sort import sub_sort
 from .ISPager.ShowResult import ShowResult
@@ -85,7 +85,7 @@ def show(request, cf: list, err: list | None = None):
             records.append(temp)
     else:
         records = False
-    return render(request, f'add_{fields()[23][2]}.html', {
+    return render(request, f'add3.html', {
         'caption': [fields(True)[23][1], f'Добавление {fields()[23][1].lower()}а'],
         'th': [django_head_sort_link(request, sr.getParams(), f) for f in cf],
         'records': records,

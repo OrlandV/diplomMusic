@@ -1,7 +1,8 @@
 from .fields import fields
 
 
-def get_author_query(af: list, mode: int | str, _get: dict | None = None, select: bool = True, index: int = 1) -> str:
+def get_author_query(af: list, mode: int | str, _get: dict | None = None, select: bool = True,
+                     index: int = 1) -> str | list:
     f0 = af[0][2]  # id
     f1 = af[1][2]  # name_original
     f2 = af[2][2]  # name_romaji

@@ -1,7 +1,7 @@
 from .fields import fields
 
 
-def get_album_query(af: list, mode: int | str, aid: int = 0, rel: int = 0, where: str = '') -> str:
+def get_album_query(af: list, mode: int | str, aid: int = 0, rel: int = 0, where: str = '') -> str | list:
     ff5 = fields()[5][2]  # album
     ff20 = fields()[20][2]  # name
     f0 = fields()[0][2]  # id

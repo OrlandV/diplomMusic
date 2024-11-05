@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from .fields import *
 from .validate_data import validate_data
-from .edit_track import edit_track
+from .edit import edit_track
 from .redirect_ import redirect_
 from .Track import Track
 from .album_query import get_album_query

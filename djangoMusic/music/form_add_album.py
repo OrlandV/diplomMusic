@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from .fields import *
 from .validate_data import validate_data
-from .add_album import add_album
+from .add import add_album
 from .get_param import get_param
 from .sub_sort import sub_sort
 from .ISPager.ShowResult import ShowResult
@@ -74,7 +74,7 @@ def show(request, cf: list, set_ref: str | bool, err: list | None = None) -> Htt
             records.append(temp)
     else:
         records = False
-    templ_name = f'add_{fields()[5][2]}.html'
+    templ_name = f'add2.html'
     context = {
         'caption': [fields(True)[5][1], f'Добавление {fields()[5][1].lower()}а'],
         'th': [django_head_sort_link(request, sr.getParams(), f) for f in af],

@@ -118,7 +118,7 @@ def search(request):
         else:
             records = False
     return render(request, 'search.html', {
-        'caption': 'Поиск',
+        'caption': ['', 'Поиск'],
         'th': [django_head_sort_link(request, sr.getParams(), f) for f in cf],
         'records': records,
         'isp': sr.getISP(),
