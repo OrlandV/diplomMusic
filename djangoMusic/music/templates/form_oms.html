@@ -1,0 +1,16 @@
+                <div align="center">
+                    Порядок множественной сортировки:<br />
+                    <form name="frmSort" method="POST">
+                        {% csrf_token %}
+                        <table>
+                            <tr>
+                                <td><select name="selSort" id="selSort" onChange="selChange('selSort');">
+                                    <option value=""></option>{% for option in options %}
+                                    <option id="selSortOpt{{option.id}}" value="{{option.value}}">{{option.text}}</option>{% endfor %}
+                                </select></td>
+                                <td>{{form_oms.chbSort}}<label class="lblSort" for="chbSort">{{form_oms.chbSort.label}}</label></td>
+                            </tr>
+                        </table>
+                        <input type="submit" name="subSort" value="Сортировать">
+                    </form>
+                </div>

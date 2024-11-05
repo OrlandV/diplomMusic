@@ -1,0 +1,8 @@
+                <div align="center">
+                    <form method="post">
+                        {% csrf_token %}
+                        <label for="rpp">{{form_rpp.rpp.label}}</label><br>
+                        {{form_rpp.rpp}}
+                        <input type="submit" name="rppOK" value="OK">
+                    </form>
+                </div>

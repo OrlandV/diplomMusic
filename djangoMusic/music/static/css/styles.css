@@ -1,0 +1,207 @@
+a:link {
+	color: #00f0f0;
+}
+a:visited {
+	color: #00a0a0;
+}
+.adel {
+    text-decoration: none;
+    color: red;
+	font-size: 14pt;
+}
+.article {
+    text-align: justify;
+    text-indent: 30px;
+    margin: 0;
+}
+body {
+	background-color: #000e20;
+	font-family: Calibri;
+	font-size: 14pt;
+	color: #b4b4b4;/*
+    position: absolute;
+    top: 0px;
+    left: 0px;*/
+}
+.cnt {
+	text-align: center;
+}
+div.foot {
+	font-family: Tahoma;
+	color: yellow;
+	background-color: blue;
+}
+.font80 {
+	color: #808080;
+}
+.help-head {
+    cursor: pointer;
+}
+.help-head span {
+    color: #00f0f0;
+    border-bottom: 1px dotted;
+}
+.help-body {
+    text-align: left;
+}
+.hidden {
+    display: none;
+}
+input,
+select,
+textarea {
+	background-color: #1b273d;
+	color: #9ba7bd;
+	border: 1px;
+}
+input.chess {
+	width: 37px;
+	height: 37px;
+	border: 3px outset;
+}
+input[type=file],
+input[type=submit] {
+	background-color: #9ff;
+	color: #190000;
+	font-family: Calibri;
+	font-size: 12pt;
+    cursor: pointer;
+}
+input[type=file]:hover,
+input[type=submit]:hover {
+	background-color: #cf9;
+	color: #4c0019;
+}
+input[type=submit].dis {
+	background-color: #4c0019;
+	color: #cf9;
+    cursor: default;
+}
+.jst {
+	text-align: justify;
+}
+input[type=submit].dis:hover {
+	background-color: #4c0019;
+	color: #cf9;
+    cursor: default;
+}
+.news-date {
+	background-color: #000080;
+	color: #ffff00;
+	font-weight: bold;
+}
+p.err {
+	background-color: white;
+	color: red;
+	text-align: left;
+	font-weight: bold;
+    text-indent: 0px;
+}
+table.brd th,
+table.brd td {
+	border: 1px solid #808080;
+}
+table.full {
+	border-collapse: collapse;
+	width: 100%;
+}
+table.show {
+	font-size: 12pt;
+}
+td {
+	padding: 2px;
+}
+td.hr {
+    background-color: #808080;
+    height: 1px;
+	padding: 0px;
+}
+td.p0 {
+	padding: 0px;
+}
+th {
+	font-weight: normal;
+	background-color: #101e30;
+}
+.chbSort {display: none;}
+.lblSort {
+	font-size: 12px;
+	position: relative;
+	display: block;
+	width: 45px;
+	height: 5px;
+	padding: 7.5px;
+	border-radius: 25px;
+	line-height: 5px;
+	text-align: left;
+	color: #31b3ff;
+	text-shadow: .5px .5px 0px rgba(255,255,255,.15);
+	background: rgb(71, 71, 71);
+	box-shadow:
+		0 .5px 0 rgba(255,255,255,.2),
+		inset 0 0 0 2.5px rgb(60, 60, 60),
+		inset 0 3px 3px rgba(0,0,0,.5),
+		inset 0 -3px .5px rgba(255,255,255,.2);
+	cursor: pointer;
+}
+.lblSort:before {
+	content: "↑";
+	position: absolute;
+	right: 7.5px;
+	color: #31b3ff;
+}
+.lblSort:after {
+	content: "";
+	position: absolute;
+	left: 2.5px; top: 2.5px;
+	display: block;
+	width: 25px;
+	height: 15px;
+	border-radius: 25px;
+	background: #ccc linear-gradient(#fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	transition: .5s;
+}
+.chbSort:checked ~ .lblSort:after {
+	left: 32px;
+}
+.chbStr {display: none;}
+.lblStr {
+	font-size: 12px;
+	position: relative;
+	display: block;
+	width: 45px;
+	height: 5px;
+	padding: 7.5px;
+	border-radius: 25px;
+	line-height: 5px;
+	text-align: left;
+	color: #31b3ff;
+	text-shadow: .5px .5px 0px rgba(255,255,255,.15);
+	background: rgb(71, 71, 71);
+	box-shadow:
+		0 .5px 0 rgba(255,255,255,.2),
+		inset 0 0 0 2.5px rgb(60, 60, 60),
+		inset 0 3px 3px rgba(0,0,0,.5),
+		inset 0 -3px .5px rgba(255,255,255,.2);
+	cursor: pointer;
+}
+.lblStr:before {
+	content: "Нет";
+	position: absolute;
+	right: 7.5px;
+	color: #000;
+}
+.lblStr:after {
+	content: "";
+	position: absolute;
+	left: 2.5px; top: 2.5px;
+	display: block;
+	width: 25px;
+	height: 15px;
+	border-radius: 25px;
+	background: #ccc linear-gradient(#fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	transition: .5s;
+}
+.chbStr:checked ~ .lblStr:after {
+	left: 32px;
+}

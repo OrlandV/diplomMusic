@@ -1,0 +1,7 @@
+{% extends "music.html" %}{% block content %}<div align="center">
+    <h3 style="color: yellow">{{caption}}</h3>{% if err %}{% autoescape off %}{{err}}{% endautoescape %}{% endif %}
+    <form method="POST">
+        {% csrf_token %}{% autoescape off %}{{form_edit}}{% endautoescape %}
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orland{% block head_title %}{% endblock %}</title>
+    <link type="image/x-icon" rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+    <link type="image/x-icon" rel="icon" href="{% static 'img/favicon.png' %}">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">{% block head_script %}{% endblock %}
+</head>
+<body>{% block title %}{% endblock %}
+{% block content %}{% endblock %}
+<div class="foot cnt">&copy; <a href="/" title="На главную" style="color: yellow;"><b>Orland</b></a>, 2024.</div>
+</body>
+</html>
