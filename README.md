@@ -24,23 +24,23 @@ Django-приложение (т.е. веб-приложение) для рабо
 
    `https://dev.mysql.com/downloads/mysql/`
 
-3. Клонируйте проект из репозитория:
+2. Клонируйте проект из репозитория:
    ```bash
    git clone https://github.com/OrlandV/diplomMusic.git
    ```
 
-4. Создайте базу данных.
+3. Создайте базу данных.
    * Используйте файл `diplomMusic/django_music2_create.sql`.
    * Либо используйте модель из файла `diplomMusic/django_music2_model.mwb`, импортировав её в СУБД и выполнив команду меню `Database → Forward Engineer…` → `Next` в окне мастера.
 
-   Должна создатся база данных `django_music2`.
+   Должна создастся база данных `django_music2`.
 
-5. Установите Django и клиент MySQL:
+4. Установите Django и клиент MySQL:
    ```bash
    pip install Django==5.1.2 mysqlclient==2.2.5
    ```
 
-6. Исправьте в конфигурации подключения к базе данных в файле `diplomMusic/djangoMusic/music/config_db.py` логин и пароль на свои.
+5. Исправьте в конфигурации подключения к базе данных в файле `diplomMusic/djangoMusic/music/config_db.py` логин и пароль на свои.
     ```python
     db_connect = {
         'ENGINE': 'django.db.backends.mysql',
@@ -52,7 +52,7 @@ Django-приложение (т.е. веб-приложение) для рабо
     }
     ```
 
-7. Перейдите в папку приложения и запустите его:
+6. Перейдите в папку приложения и запустите его:
    ```bash
    cd diplomMusic/djangoMusic
    python manage.py runserver
