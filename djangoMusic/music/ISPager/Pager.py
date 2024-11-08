@@ -25,10 +25,6 @@ class Pager:
     def getItemsPerPage(self) -> int:
         return self.items_per_page
 
-    # def getCurrentPagePath(self, path: str):
-    #     # Добавил для данного проекта .replace('/search.html', '/')
-    #     return path.replace('/index.html', '/').replace('/search.html', '/')
-
     def getCurrentPage(self, _get) -> int:
         if self.getCounterParam() in _get:
             return int(_get.get(self.getCounterParam()))

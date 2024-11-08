@@ -6,7 +6,7 @@ from .validate_data import validate_data
 from .add import add_ost_from
 from .get_param import get_param
 from .sub_sort import sub_sort
-from .ISPager.ShowResult import ShowResult
+from .ISPager.django_pager import get_django_pager
 from .show_ost_from_query import get_show_ost_from_query
 from .format_td import format_td
 from .head_sort_link import django_head_sort_link
@@ -38,8 +38,9 @@ def form_ost_from(request, cf: list) -> Form:
 def show(request, cf: list, set_ref: str | bool, err: list | None = None) -> HttpResponse:
     of = cur_fields([0])
     of.extend(cf)
-    sr = ShowResult(get_show_ost_from_query(of, request.GET), request)
-    if items := sr.getISP().getItems(request.GET):
+    django_pager = get_django_pager(get_show_ost_from_query(of, request.GET), request)
+    records = False
+    if items := django_pager.getItems(request.GET):
         records = []
         for record in items:
             temp = []
@@ -51,14 +52,12 @@ def show(request, cf: list, set_ref: str | bool, err: list | None = None) -> Htt
             ]
             temp.append(ed)
             records.append(temp)
-    else:
-        records = False
     templ_name = f'add1.html'
     context = {
         'caption': [fields(True)[11][1], f'Добавление в «{fields()[11][1]}»'],
-        'th': [django_head_sort_link(request, sr.getParams(), f) for f in of],
+        'th': [django_head_sort_link(request, django_pager.getParameters(), f) for f in of],
         'records': records,
-        'isp': sr.getISP(),
+        'isp': django_pager,
         'options': [Option(f[0], f[1]) for f in cf],
         'form_oms': OMSForm(),
         'form_rpp': RppForm(request.GET) if 'rpp' in request.GET else RppForm(),
@@ -84,8 +83,6 @@ def form_add_ost_from(request):
             if not (err := validate_data(request.POST, (2, 3, 4))):
                 add_ost_from(request.POST, cf)
                 re_params = get_param(request.GET)
-                # if 'page' in request.GET:
-                #     re_params['page'] = request.GET.get('page')
                 return redirect(request.path + ('?' + re_params.urlencode() if len(re_params) else ''))
             return show(request, cf, set_ref, err)
         elif 'rppOK' in request.POST:

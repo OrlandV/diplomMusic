@@ -1,1 +1,1 @@
-__all__ = ['DjangoPager', 'ItemsRange', 'Pager', 'ShowResult', 'dict_fetch_all']
+__all__ = ['DjangoPager', 'ItemsRange', 'Pager', 'django_pager.py', 'dict_fetch_all']

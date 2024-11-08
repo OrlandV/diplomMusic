@@ -3,7 +3,7 @@ from django.http import QueryDict
 from .fields import *
 from .sub_sort import sub_sort
 from .search_query import get_search_query
-from .ISPager.ShowResult import ShowResult
+from .ISPager.django_pager import get_django_pager
 from .head_sort_link import django_head_sort_link
 from .format_td import format_td
 from .classes import *
@@ -94,6 +94,7 @@ def search(request):
             return sub_sort(request)
     else:
         query = None
+        records = False
         if 'sub' in request.GET and request.GET['sub'] in ('ok', 'sort'):
             if request.GET['sub'] == 'sort' and 'sel' in request.GET and request.GET['sel'] == '':
                 message += '<p class="cnt" style="color: yellow;">Укажите хотя бы один параметр для сортировки.</p>\n'
@@ -102,8 +103,8 @@ def search(request):
                 message += '<p class="cnt" style="color: yellow;">Укажите хотя бы один параметр для поиска.</p>\n'
         if query is None or not query:
             query = get_search_query(request.GET, cf, True)
-        sr = ShowResult(query, request)
-        if items := sr.getISP().getItems(request.GET):
+        django_pager = get_django_pager(query, request)
+        if items := django_pager.getItems(request.GET):
             records = []
             for record in items:
                 temp = []
@@ -115,13 +116,11 @@ def search(request):
                 ]
                 temp.append(ed)
                 records.append(temp)
-        else:
-            records = False
     return render(request, 'search.html', {
         'caption': ['', 'Поиск'],
-        'th': [django_head_sort_link(request, sr.getParams(), f) for f in cf],
+        'th': [django_head_sort_link(request, django_pager.getParameters(), f) for f in cf],
         'records': records,
-        'isp': sr.getISP(),
+        'isp': django_pager,
         'options': [Option(f[0], f[1]) for f in cf],
         'form_oms': OMSForm(),
         'form_rpp': RppForm(request.GET) if 'rpp' in request.GET else RppForm(),

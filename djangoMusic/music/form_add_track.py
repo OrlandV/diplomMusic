@@ -4,7 +4,7 @@ from .validate_data import validate_data
 from .add import add_track
 from .get_param import get_param
 from .sub_sort import sub_sort
-from .ISPager.ShowResult import ShowResult
+from .ISPager.django_pager import get_django_pager
 from .show_track_query import get_show_track_query
 from .head_sort_link import django_head_sort_link
 from .format_td import format_td
@@ -38,7 +38,7 @@ def form_track(request, tcf: list) -> Form:
                            [alf[1][2], alf[2][2], alf[3][2], alf[4][2]]) if i in (4, 10) else option_author,
                 'sort': fields()[3][2] if i == 10 else fields()[22][2],
                 'optionWidth': 198,
-                'note': note('множественный выбор с помощью CTRL и SHIFT') if i not in (4, 10) else ""
+                'note': note('множественный выбор с помощью CTRL и SHIFT') if i != 4 else ""
             }
             if i not in (4, 10):
                 dp[f[0]]['separator'] = ' / '
@@ -70,8 +70,9 @@ def form_track(request, tcf: list) -> Form:
 
 
 def show(request, cf: list, err: list | None = None):
-    sr = ShowResult(get_show_track_query(cf, request.GET), request)
-    if items := sr.getISP().getItems(request.GET):
+    django_pager = get_django_pager(get_show_track_query(cf, request.GET), request)
+    records = False
+    if items := django_pager.getItems(request.GET):
         records = []
         for record in items:
             temp = []
@@ -83,13 +84,11 @@ def show(request, cf: list, err: list | None = None):
             ]
             temp.append(ed)
             records.append(temp)
-    else:
-        records = False
     return render(request, f'add3.html', {
         'caption': [fields(True)[23][1], f'Добавление {fields()[23][1].lower()}а'],
-        'th': [django_head_sort_link(request, sr.getParams(), f) for f in cf],
+        'th': [django_head_sort_link(request, django_pager.getParameters(), f) for f in cf],
         'records': records,
-        'isp': sr.getISP(),
+        'isp': django_pager,
         'options': [Option(f[0], f[1]) for f in cf],
         'form_oms': OMSForm(),
         'form_rpp': RppForm(request.GET) if 'rpp' in request.GET else RppForm(),
@@ -106,8 +105,6 @@ def form_add_track(request):
             if not (err := validate_data(request.POST, (2, 3, 4, 12))):
                 add_track(request.POST, cf[1:])
                 re_params = get_param(request.GET)
-                # if 'page' in request.GET:
-                #     re_params['page'] = request.GET.get('page')
                 return redirect(request.path + ('?' + re_params.urlencode() if len(re_params) else ''))
             return show(request, cf, err)
         elif 'rppOK' in request.POST:

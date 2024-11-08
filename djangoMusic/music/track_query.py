@@ -63,7 +63,7 @@ def track_query(cf: list, rel: int = 0, where: str = '') -> str:
     {lj}{f11}
     ON {f23}_{f11}.{f11}_{f0} = {f11}.{f0}
     ''') + (f'''INNER JOIN {f23 + '_' if rel == 11 else ''}{cf[rel][2]}
-    ON {f23 + '_' + f11 if rel == 11 else ''}.{cf[rel][2] if rel == 5 else
+    ON {f23 + '_' + f11 if rel == 11 else (f23 if where else '')}.{cf[rel][2] if rel == 5 else
         (f23 + '_' + f0 if rel == 11 else f0)} = {f23 if rel == 11 else
         cf[rel][2]}.{'' if rel in (5, 11) else f23 + '_'}{f0}
     {where}''' if where else '') + f'''

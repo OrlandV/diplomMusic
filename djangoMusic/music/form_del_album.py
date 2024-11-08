@@ -5,7 +5,7 @@ from .fields import *
 from .del_ import del_, relationships
 from .redirect_ import redirect_
 from .Album import Album
-from .ISPager.ShowResult import ShowResult
+from .ISPager.django_pager import get_django_pager
 from .show_del_query import get_show_del_query
 from .format_td import format_td
 from .head_sort_link import django_head_sort_link
@@ -28,9 +28,9 @@ def form_del_album(request, _id: int):
     if len(cnt):
         rel_data = []
         tf = cur_fields(list(range(13)))
-        sr = ShowResult(get_show_del_query(5, tf, _id), request)
+        django_pager = get_django_pager(get_show_del_query(5, tf, _id), request)
         records = []
-        for record in sr.getISP().getItems(request.GET):
+        for record in django_pager.getItems(request.GET):
             temp = []
             for f in record:
                 temp.append(format_td(str(f)) if f is not None else '')
@@ -42,9 +42,10 @@ def form_del_album(request, _id: int):
             records.append(temp)
         rel_data.append({
             'caption': f'Найдены связи с {fields()[23][1].lower()}ами, содержащимися в {fields()[5][1].lower()}е',
-            'th': [django_head_sort_link(request, sr.getParams(), f) for f in tf if f[0] != tf[cnt[0]][0]],
+            'th': [django_head_sort_link(request, django_pager.getParameters(), f) for f in tf
+                   if f[0] != tf[cnt[0]][0]],
             'records': records,
-            'isp': sr.getISP(),
+            'isp': django_pager,
             'form_rpp': RppForm(request.GET) if 'rpp' in request.GET else RppForm(),
             'no_ok': True
         })

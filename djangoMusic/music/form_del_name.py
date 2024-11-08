@@ -5,7 +5,7 @@ from .fields import *
 from .del_ import del_, relationships
 from .redirect_ import redirect_
 from .Name import Name
-from .ISPager.ShowResult import ShowResult
+from .ISPager.django_pager import get_django_pager
 from .show_del_query import get_show_del_query
 from .format_td import format_td
 from .head_sort_link import django_head_sort_link
@@ -28,9 +28,9 @@ def form_del_name(request, index: int, _id: int):
     if len(cnt):
         rel_data = []
         af = cur_fields([0, 13, 14, 11, 2, 3, 4, 15, 16, 17, 18, 19, 12])
-        sr = ShowResult(get_show_del_query(index, af, _id), request)
+        django_pager = get_django_pager(get_show_del_query(index, af, _id), request)
         records = []
-        for record in sr.getISP().getItems(request.GET):
+        for record in django_pager.getItems(request.GET):
             temp = []
             for f in record:
                 temp.append(format_td(str(f)) if f is not None else '')
@@ -42,9 +42,10 @@ def form_del_name(request, index: int, _id: int):
             records.append(temp)
         rel_data.append({
             'caption': f'Найдены связи с {fields()[5][1].lower()}ами',
-            'th': [django_head_sort_link(request, sr.getParams(), f) for f in af if f[0] != fields()[cnt[0]][0]],
+            'th': [django_head_sort_link(request, django_pager.getParameters(), f) for f in af
+                   if f[0] != fields()[cnt[0]][0]],
             'records': records,
-            'isp': sr.getISP(),
+            'isp': django_pager,
             'form_rpp': RppForm(request.GET) if 'rpp' in request.GET else RppForm(),
             'no_ok': True
         })
