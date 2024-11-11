@@ -1,21 +1,48 @@
+"""
+Класс интервального представления номеров страниц в строке навигации.
+Пример для 35-и элементов по 10 на странице:
+[1–10] [11–20] [21–30] [31–35]
+"""
 from .Pager import Pager
 
 
 class ItemsRange:
+    """
+    Класс интервального представления номеров страниц в строке навигации.
+    Пример для 35-и элементов по 10 на странице:
+    [1–10] [11–20] [21–30] [31–35]
+    :param request: Объект django.http.request.
+    """
     def __init__(self, request):
-        super().__init__()
         self.request = request
         self.pager: Pager
 
     def link(self, title: str, current_page: int = 1) -> str:
+        """
+        Элемент панели навигации (ссылки).
+        :param title: Текст ссылки.
+        :param current_page: Номер страницы, для которой строиться ссылка.
+        """
+        # В оригинале этот метод находится в родительском абстрактном классе View, от которого наследуются и другие
+        # классы представлений. Для данного проекта такое выделение не требуется.
+        params = self.pager.getParameters()
         return (f'<a href="{self.request.path}?'
-                f'{self.pager.getCounterParam()}={current_page}{self.pager.getParameters()}">{title}</a>')
+                f'{self.pager.getCounterParam()}={current_page}{'&' if params else ''}{params}">{title}</a>')
 
     @staticmethod
-    def range(first: int, second: int) -> str:
-        return f'[{first}–{second}]'
+    def range(first: int, last: int) -> str:
+        """
+        Текст с интервалом.
+        :param first: Номер первого в интервале элемента.
+        :param last: Номер последнего в интервале элемента.
+        """
+        return f'[{first}–{last}]'
 
     def render(self, pager: Pager) -> str:
+        """
+        Панель навигации.
+        :param pager: Объект ISPager.Pager.
+        """
         self.pager = pager
         return_page = ''
         current_page = self.pager.getCurrentPage(self.request.GET)

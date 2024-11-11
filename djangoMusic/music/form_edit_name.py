@@ -1,3 +1,9 @@
+"""
+Представление одной из трёх страниц:
+1) «Правка медиа-формата» по адресу /music/edit/media_format/<int:_id>/,
+2) «Правка лейбла» по адресу /music/edit/label/<int:_id>/,
+3) «Правка изготовителя» по адресу /music/edit/manufacturer/<int:_id>/.
+"""
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string

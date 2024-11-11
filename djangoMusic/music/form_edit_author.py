@@ -1,3 +1,6 @@
+"""
+Представление страницы «Правка автора» по адресу /music/edit/author/<int:_id>/.
+"""
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string

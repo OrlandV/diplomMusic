@@ -3,6 +3,9 @@ from django import forms
 
 
 class OMSForm(forms.Form):
+    """
+    Модель переключателя направления сортировки для формы множественной сортировки.
+    """
     chbSort = forms.BooleanField(
         label='↓',
         label_suffix='',
@@ -12,6 +15,9 @@ class OMSForm(forms.Form):
 
 
 class RppForm(forms.Form):
+    """
+    Модель целочисленного поля формы указания количества отображаемых записей на странице.
+    """
     def __init__(self, *args, **kwargs):
         kwargs['auto_id'] = False
         super().__init__(*args, **kwargs)

@@ -2,6 +2,16 @@ from .fields import fields
 
 
 def get_album_query(af: list, mode: int | str, aid: int = 0, rel: int = 0, where: str = '') -> str | list:
+    """
+    Формирование tables-фрагмента SQL-запроса для функции get_django_pager.
+    :param af: Список элементов HTML-формы, содержащих соответствующие имена полей в БД.
+        Является результатом функции cur_fields.
+    :param mode: Номер или имя режима запроса.
+    :param aid: ID альбома.
+    :param rel: Индекс связи (1, 5, 8, 9, 10, 11). Используется для выключения удаляемой сущности при отображении связи.
+    :param where: WHERE-параметр фильтра при удалении.
+    :return: Строка фрагмента SQL-запроса.
+    """
     ff5 = fields()[5][2]  # album
     ff20 = fields()[20][2]  # name
     f0 = fields()[0][2]  # id

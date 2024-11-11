@@ -3,9 +3,10 @@ from .ISPager.dict_fetch_all import dict_fetch_all
 from .track_query import track_query
 
 
-def get_search_query(_get, cur_fields_list: list[list[str, str, str, int | None]], force: bool = False) -> dict | bool:
+def get_search_query(_get: dict, cur_fields_list: list[list[str, str, str, int | None]],
+                     force: bool = False) -> dict | bool:
     """
-    Формирование словаря с фрагментами SQL-запроса для объекта ShowResult.
+    Формирование словаря с фрагментами SQL-запроса для объекта DjangoPager.
     Если не переданы параметры поиска и force == False, возвращается False.
     :param _get: Словарь GET-параметров.
     :param cur_fields_list: Список элементов HTML-формы, содержащих соответствующие имена полей в БД.
@@ -66,20 +67,19 @@ def get_search_query(_get, cur_fields_list: list[list[str, str, str, int | None]
             result['where'] += nft[i][5]
     if not result['where'] and not force:
         return False
+    result['where'] = 'WHERE ' + result['where'] if result['where'] else ''
+    result['fields'] = '*'
+    result['tables'] = track_query(cur_fields_list)
+    result['group'] = ''
+    result['order'] = 'ORDER BY '
+    if 'sort' in _get and _get['sort']:
+        result['order'] += find_field(_get['sort'][:5]) + (' DESC' if _get['sort'][5] == 'd' else '')
+    elif 'sub' in _get and _get['sub'] == 'sort' and 'sel' in _get and _get['sel']:
+        result['order'] += find_field(_get['sel']) + (' DESC' if 'chb' in _get else '')
+        i = 1
+        while f'sel{i}' in _get and _get[f'sel{i}']:
+            result['order'] += ', ' + find_field(_get[f'sel{i}']) + (' DESC' if f'chb{i}' in _get else '')
+            i += 1
     else:
-        result['where'] = 'WHERE ' + result['where'] if result['where'] else ''
-        result['fields'] = '*'
-        result['tables'] = track_query(cur_fields_list)
-        result['group'] = ''
-        result['order'] = 'ORDER BY '
-        if 'sort' in _get and _get['sort']:
-            result['order'] += find_field(_get['sort'][:5]) + (' DESC' if _get['sort'][5] == 'd' else '')
-        elif 'sub' in _get and _get['sub'] == 'sort' and 'sel' in _get and _get['sel']:
-            result['order'] += find_field(_get['sel']) + (' DESC' if 'chb' in _get else '')
-            i = 1
-            while f'sel{i}' in _get and _get[f'sel{i}']:
-                result['order'] += ', ' + find_field(_get[f'sel{i}']) + (' DESC' if f'chb{i}' in _get else '')
-                i += 1
-        else:
-            result['order'] += cur_fields_list[1][2] + ', ' + cur_fields_list[2][2]
-        return result
+        result['order'] += cur_fields_list[1][2] + ', ' + cur_fields_list[2][2]
+    return result

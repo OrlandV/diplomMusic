@@ -2,6 +2,11 @@ from .ISPager.dict_fetch_all import dict_fetch_all
 
 
 class Option:
+    """
+    Объекты с параметрами тега <option>.
+    :param value: Значение параметра value.
+    :param text: Отображаемый текст.
+    """
     index = 0
 
     def __init__(self, value, text: str):
@@ -12,7 +17,18 @@ class Option:
 
 
 class Form:
-    def __init__(self, request, fields, tag_table: bool = True,
+    """
+    Класс-конструктор веб-формы. В процессе инициализации объекта формируется HTML-строка,
+    которая возвращается при обращении к объекту как к строке.
+    :param request: Объект django.http.request.
+    :param fields: Словарь словарей: {имя_поля: {имя_параметра: значение}}.
+    :param tag_table: Флаг добавление тега <table> перед формой и тега </table> после формы (по умолчанию включён).
+    :param sub_ok_value: Надпись на кнопке с именем ok и типом submit, то есть кнопке-отправителе формы.
+        По умолчанию — OK. Если передать None, то кнопка создана не будет —
+        необходимо после объекта Form создать свою кнопку.
+    :param sub_cancel_value: Аналогичная кнопке ok кнопка отмены, но значение по умолчанию — None.
+    """
+    def __init__(self, request, fields: dict[dict], tag_table: bool = True,
                  sub_ok_value: str | None = 'OK', sub_cancel_value: str | None = None):
         self.request = request
         self.html = ''

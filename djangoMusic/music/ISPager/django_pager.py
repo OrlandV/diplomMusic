@@ -1,9 +1,14 @@
+"""
+Функция get_django_pager возвращает пагинатор ISPager.DjangoPager с интервальным представлением ISPager.ItemsRange.
+Принимает словарь с фрагментами SQL-запроса. Этот словарь проверяется функцией __verification на комплектность.
+Второй принимаемый параметр — объект django.http.request.
+"""
 from django.http import QueryDict
 from .DjangoPager import DjangoPager
 from .ItemsRange import ItemsRange
 
 
-def verification(query):
+def __verification(query: dict) -> bool:
     err = []
     if not isinstance(query, dict):
         err.append('Вторым аргументом должен быть словарь параметров SQL-запроса.')
@@ -23,8 +28,13 @@ def verification(query):
     return True
 
 
-def get_django_pager(query: dict, request) -> DjangoPager:
-    if verification(query):
+def get_django_pager(query: dict, request) -> DjangoPager | None:
+    """
+    Создание пагинатора DjangoPager с интервальным представлением ItemsRange.
+    :param query: Словарь с фрагментами SQL-запроса.
+    :param request: Объект django.http.request.
+    """
+    if __verification(query):
         params = QueryDict(mutable=True)
         params.update(request.GET)
         params.pop('page', '')

@@ -3,6 +3,11 @@ from django.shortcuts import redirect
 
 
 def sub_sort(request):
+    """
+    Построение URI-строки (GET-параметров) из POST-параметров формы множественной сортировки
+    и переадресация уже с новой URI-строкой.
+    :param request: Объект django.http.request.
+    """
     params = QueryDict(request.META['QUERY_STRING'], mutable=True)
     if 'page' in params:
         params.pop('page')

@@ -1,3 +1,6 @@
+"""
+Представление страницы „Правка «Музыка из»“ по адресу /music/edit/ost_from/<int:_id>/.
+"""
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string

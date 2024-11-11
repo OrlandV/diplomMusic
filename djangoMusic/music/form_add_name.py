@@ -1,3 +1,9 @@
+"""
+Представление одной из трёх страниц:
+1) «Добавление медиа-формата» по адресу /music/add/media_format/,
+2) «Добавление лейбла» по адресу /music/add/label/,
+3) «Добавление изготовителя» по адресу /music/add/manufacturer/.
+"""
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
@@ -7,7 +13,7 @@ from .add import add_name
 from .get_param import get_param
 from .sub_sort import sub_sort
 from .ISPager.django_pager import get_django_pager
-from .show_name_query import get_show_name_query
+from .dp_query import get_dp_query
 from .format_td import format_td
 from .head_sort_link import django_head_sort_link
 from .classes import *
@@ -16,9 +22,10 @@ from .show_errors import show_errors
 
 
 def show(request, cf: list, index: int, set_ref: str | bool, err: list | None = None) -> HttpResponse:
+    table = fields()[index][2]
     nf = cur_fields([0])
     nf.extend(cf)
-    django_pager = get_django_pager(get_show_name_query(index, nf, request.GET), request)
+    django_pager = get_django_pager(get_dp_query(nf, request.GET, table), request)
     records = False
     if items := django_pager.getItems(request.GET):
         records = []
@@ -27,8 +34,8 @@ def show(request, cf: list, index: int, set_ref: str | bool, err: list | None = 
             for f in record:
                 temp.append(format_td(str(f)) if f is not None else '')
             ed = [
-                f'<a href="/music/edit/{fields()[index][2]}/{record[0]}/"><img src="/static/img/pencil.png" /></a>',
-                f'<a href="/music/del/{fields()[index][2]}/{record[0]}/" class="adel" style="color: red;">×</a>'
+                f'<a href="/music/edit/{table}/{record[0]}/"><img src="/static/img/pencil.png" /></a>',
+                f'<a href="/music/del/{table}/{record[0]}/" class="adel" style="color: red;">×</a>'
             ]
             temp.append(ed)
             records.append(temp)

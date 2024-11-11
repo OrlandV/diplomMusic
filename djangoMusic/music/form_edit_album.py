@@ -1,3 +1,6 @@
+"""
+Представление страницы «Правка альбома» по адресу /music/edit/album/<int:_id>/.
+"""
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string

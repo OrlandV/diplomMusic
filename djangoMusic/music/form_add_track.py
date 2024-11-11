@@ -1,3 +1,6 @@
+"""
+Представление страницы «Добавление трека» по адресу /music/add/track/.
+"""
 from django.shortcuts import redirect, render
 from .fields import *
 from .validate_data import validate_data
@@ -5,7 +8,7 @@ from .add import add_track
 from .get_param import get_param
 from .sub_sort import sub_sort
 from .ISPager.django_pager import get_django_pager
-from .show_track_query import get_show_track_query
+from .dp_query import get_dp_query
 from .head_sort_link import django_head_sort_link
 from .format_td import format_td
 from .classes import *
@@ -70,7 +73,8 @@ def form_track(request, tcf: list) -> Form:
 
 
 def show(request, cf: list, err: list | None = None):
-    django_pager = get_django_pager(get_show_track_query(cf, request.GET), request)
+    table = fields()[23][2]
+    django_pager = get_django_pager(get_dp_query(cf, request.GET, table), request)
     records = False
     if items := django_pager.getItems(request.GET):
         records = []
@@ -79,8 +83,8 @@ def show(request, cf: list, err: list | None = None):
             for f in record:
                 temp.append(format_td(str(f)) if f is not None else '')
             ed = [
-                f'<a href="/music/edit/{fields()[23][2]}/{record[0]}/"><img src="/static/img/pencil.png" /></a>',
-                f'<a href="/music/del/{fields()[23][2]}/{record[0]}/" class="adel" style="color: red;">×</a>'
+                f'<a href="/music/edit/{table}/{record[0]}/"><img src="/static/img/pencil.png" /></a>',
+                f'<a href="/music/del/{table}/{record[0]}/" class="adel" style="color: red;">×</a>'
             ]
             temp.append(ed)
             records.append(temp)

@@ -1,3 +1,6 @@
+"""
+Экспериментальные модели. В проекте так и не используются.
+"""
 from django.db import models
 from .fields import fields
 

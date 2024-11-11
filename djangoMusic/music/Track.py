@@ -8,10 +8,15 @@ from .OSTFrom import OSTFrom
 
 
 class Track:
+    """
+    Класс Трек для упрощения подстановки данных в форму правки или вывода полного представления при удалении.
+    :param cf: Список полей — результат функции cur_fields.
+    :param tid: ID трека.
+    """
     def __init__(self, cf: list, tid: int):
         self.cf = cf
         self.id = tid
-        item = self._get_items()
+        item = self.__get_items()
         self.performer = item[self.cf[1][2]]
         self.name_orig = item[self.cf[2][2]]
         self.name_rom = item[self.cf[3][2]]
@@ -25,7 +30,7 @@ class Track:
         self.ost_from = item[self.cf[11][2]]
         self.notes = item[self.cf[12][2]]
 
-    def _get_items(self) -> dict:
+    def __get_items(self) -> dict:
         query = f'''SELECT * FROM {track_query(self.cf)}
 WHERE {self.cf[0][2]} = {self.id}'''
         return dict_fetch_all(query, True)
@@ -33,12 +38,11 @@ WHERE {self.cf[0][2]} = {self.id}'''
     def get_name(self, index: int) -> str | None:
         if index == 2:
             return self.name_orig
-        elif index == 3:
+        if index == 3:
             return self.name_rom
-        elif index == 4:
+        if index == 4:
             return self.name_eng
-        else:
-            return None
+        return None
 
     def get_author_id(self, index: int) -> tuple:
         a = fields()[24][2]
@@ -62,16 +66,15 @@ WHERE {ai}.{t}_{_id} = {self.id}'''
                 for i, f in enumerate(af):
                     res[_id[0]] += f + (' / ' if i < len(af) - 1 else '')
                 return res
-        elif index == 1:
+        if index == 1:
             return self.performer
-        elif index == 8:
+        if index == 8:
             return self.lyricist
-        elif index == 9:
+        if index == 9:
             return self.composer
-        elif index == 10:
+        if index == 10:
             return self.arranger
-        else:
-            return None
+        return None
 
     def get_album_id(self) -> tuple:
         query = f'''SELECT {self.cf[5][2]}
@@ -91,8 +94,7 @@ WHERE {self.cf[0][2]} = {self.id}'''
                 for i, f in enumerate(af):
                     res[_id[0]] += f + (' / ' if i < len(af) - 1 else '')
             return res
-        else:
-            return self.album
+        return self.album
 
     def get_ost_from_id(self) -> tuple:
         o = self.cf[11][2]
@@ -115,8 +117,7 @@ WHERE {t}_{_id} = {self.id}'''
                 for i, f in enumerate(of):
                     res[_id[0]] += f + (' / ' if i < len(of) - 1 else '')
             return res
-        else:
-            return self.ost_from
+        return self.ost_from
 
     def get_all(self, is_dict: bool = False, album_fields: list | None = None, ost_fields: list | None = None,
                 _get: dict | None = None) -> list:

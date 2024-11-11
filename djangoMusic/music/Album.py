@@ -3,8 +3,14 @@ from .ISPager.dict_fetch_all import dict_fetch_all
 
 
 class Album:
+    """
+    Класс Альбом для упрощения подстановки данных в форму правки или вывода полного представления при удалении.
+    :param cf: Список полей — результат функции cur_fields.
+    :param mode: Номер или имя режима запроса в функции get_album_query.
+    :param aid: ID альбома.
+    """
     def __init__(self, cf: list, mode: int | str, aid: int | bool = False):
-        item = self._get_items(cf, mode, aid)
+        item = self.__get_items(cf, mode, aid)
         self.id = aid or item[cf[0][2]]
         self.date = item[cf[1][2]]
         self.catalog_number = item[cf[2][2]]
@@ -19,7 +25,7 @@ class Album:
         self.note = item[cf[11][2]]
 
     @staticmethod
-    def _get_items(cf: list, mode: int | str, aid: int | bool = False) -> dict:
+    def __get_items(cf: list, mode: int | str, aid: int | bool = False) -> dict:
         query = get_album_query(cf, mode, aid)
         return dict_fetch_all(query, True)
 

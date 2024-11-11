@@ -1,5 +1,10 @@
+"""
+Модуль с функциями, выполняющими непосредственное удаление записей из базы данных.
+"""
 from django.db import connection
 from .fields import fields
+
+w = ' WHERE '
 
 
 def execute(query: str, func: str | None = None):
@@ -10,22 +15,23 @@ def execute(query: str, func: str | None = None):
 
 
 def relationships(fni: int, _id: int) -> list:
+    scf = 'SELECT COUNT(*) FROM '
     cnt = []
     if fni == 5:
-        if execute(f'SELECT COUNT(*) FROM {fields()[23][2]} WHERE {fields()[fni][2]} = {_id}',
+        if execute(f'{scf}{fields()[23][2]}{w}{fields()[fni][2]} = {_id}',
                    'fetchone'):
             cnt.append(fni)
     elif fni == 11:
-        if execute(f'SELECT COUNT(*) FROM {fields()[23][2]}_{fields()[fni][2]} '
-                   f'WHERE {fields()[fni][2]}_{fields()[0][2]} = {_id}', 'fetchone'):
+        if execute(f'{scf}{fields()[23][2]}_{fields()[fni][2]}'
+                   f'{w}{fields()[fni][2]}_{fields()[0][2]} = {_id}', 'fetchone'):
             cnt.append(fni)
     elif fni in (17, 18, 19):
-        if execute(f'SELECT COUNT(*) FROM {fields()[5][2]} WHERE {fields()[fni][2]} = {_id}',
+        if execute(f'{scf}{fields()[5][2]}{w}{fields()[fni][2]} = {_id}',
                    'fetchone'):
             cnt.append(fni)
     elif fni == 24:
         for i in (1, 8, 9, 10):
-            if execute(f'SELECT COUNT(*) FROM {fields()[i][2]} WHERE {fields()[24][2]}_{fields()[0][2]} = {_id}',
+            if execute(f'{scf}{fields()[i][2]}{w}{fields()[24][2]}_{fields()[0][2]} = {_id}',
                        'fetchone'):
                 cnt.append(i)
     return cnt
@@ -33,7 +39,6 @@ def relationships(fni: int, _id: int) -> list:
 
 def del_(fni: int, _id: int):
     df = 'DELETE FROM '
-    w = ' WHERE '
     if fni == 11:
         execute(f'{df}{fields()[23][2]}_{fields()[fni][2]}{w}{fields()[fni][2]}_{fields()[0][2]} = {_id}')
         return

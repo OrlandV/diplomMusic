@@ -1,3 +1,6 @@
+"""
+Представление страницы «Поиск» по адресу /music/.
+"""
 from django.shortcuts import render, redirect
 from django.http import QueryDict
 from .fields import *
@@ -92,30 +95,29 @@ def search(request):
             return sub_ok(request, cf)
         elif 'subSort' in request.POST:
             return sub_sort(request)
-    else:
-        query = None
-        records = False
-        if 'sub' in request.GET and request.GET['sub'] in ('ok', 'sort'):
-            if request.GET['sub'] == 'sort' and 'sel' in request.GET and request.GET['sel'] == '':
-                message += '<p class="cnt" style="color: yellow;">Укажите хотя бы один параметр для сортировки.</p>\n'
-            query = get_search_query(request.GET, cf)
-            if not query:
-                message += '<p class="cnt" style="color: yellow;">Укажите хотя бы один параметр для поиска.</p>\n'
-        if query is None or not query:
-            query = get_search_query(request.GET, cf, True)
-        django_pager = get_django_pager(query, request)
-        if items := django_pager.getItems(request.GET):
-            records = []
-            for record in items:
-                temp = []
-                for f in record:
-                    temp.append(format_td(str(f)) if f is not None else '')
-                ed = [
-                    f'<a href="edit/{fields()[23][2]}/{record[0]}/"><img src="/static/img/pencil.png" /></a>',
-                    f'<a href="del/{fields()[23][2]}/{record[0]}/" class="adel" style="color: red;">×</a>'
-                ]
-                temp.append(ed)
-                records.append(temp)
+    query = None
+    records = False
+    if 'sub' in request.GET and request.GET['sub'] in ('ok', 'sort'):
+        if request.GET['sub'] == 'sort' and 'sel' in request.GET and request.GET['sel'] == '':
+            message += '<p class="cnt" style="color: yellow;">Укажите хотя бы один параметр для сортировки.</p>\n'
+        query = get_search_query(request.GET, cf)
+        if not query:
+            message += '<p class="cnt" style="color: yellow;">Укажите хотя бы один параметр для поиска.</p>\n'
+    if query is None or not query:
+        query = get_search_query(request.GET, cf, True)
+    django_pager = get_django_pager(query, request)
+    if items := django_pager.getItems(request.GET):
+        records = []
+        for record in items:
+            temp = []
+            for f in record:
+                temp.append(format_td(str(f)) if f is not None else '')
+            ed = [
+                f'<a href="edit/{fields()[23][2]}/{record[0]}/"><img src="/static/img/pencil.png" /></a>',
+                f'<a href="del/{fields()[23][2]}/{record[0]}/" class="adel" style="color: red;">×</a>'
+            ]
+            temp.append(ed)
+            records.append(temp)
     return render(request, 'search.html', {
         'caption': ['', 'Поиск'],
         'th': [django_head_sort_link(request, django_pager.getParameters(), f) for f in cf],

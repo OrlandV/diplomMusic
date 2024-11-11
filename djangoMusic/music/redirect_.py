@@ -3,6 +3,9 @@ from .get_param import get_param
 
 
 def redirect_(request, cookie_name: str, table_name: str):
+    """
+    Функция-обёртка над переадресацией django.shortcuts.redirect. Используется для кнопок Назад и Отмена.
+    """
     re_params = get_param(request.GET)
     if cookie_name in request.COOKIES:
         response = redirect(request.COOKIES[cookie_name] + ('?' + re_params.urlencode() if len(re_params) else ''))

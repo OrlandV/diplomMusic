@@ -1,1 +1,5 @@
-__all__ = ['DjangoPager', 'ItemsRange', 'Pager', 'django_pager.py', 'dict_fetch_all']
+"""
+Пагинация или постраничная навигация.
+"""
+
+__all__ = ['DjangoPager', 'ItemsRange', 'Pager', 'django_pager', 'dict_fetch_all']

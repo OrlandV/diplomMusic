@@ -4,8 +4,8 @@
 }
 
 function addTR(ri) {
-    const arrOptVal = [""];
-    const arrOptTex = [""];
+    let arrOptVal = [""];
+    let arrOptTex = [""];
     const ss1 = document.getElementById('selSort');
     const frmSort = document.forms['frmSort'];
 
@@ -16,13 +16,18 @@ function addTR(ri) {
     }
 
     // Фильтрация выбранных опций
-    for (let i = 0; i < ri; i++) {
-        const selectedValue = frmSort[i * 2].value;
-        const index = arrOptVal.indexOf(selectedValue);
-        if (index > -1) {
-            arrOptVal.splice(index, 1);
-            arrOptTex.splice(index, 1);
+    let c = 0;
+    for (let a = 1; a <= arrOptVal.length - 1; a++) {
+        for (let i = 0; i < ri; i++) {
+            if (frmSort[i * 2 + 1].value === arrOptVal[a]) {
+                arrOptVal.splice(a, 1);
+                arrOptTex.splice(a, 1);
+                a--;
+                c++;
+                break;
+            }
         }
+        if (c === ri) break;
     }
 
     // Создание нового ряда таблицы
@@ -39,6 +44,8 @@ function addTR(ri) {
 
     arrOptVal.forEach((val, i) => {
         const newOpt = document.createElement("OPTION");
+        newOpt.id = "selSort" + ri + "Opt" + i;
+        newOpt.name = newOpt.id;
         newOpt.value = val;
         newOpt.text = arrOptTex[i];
         newSel.add(newOpt);
@@ -47,6 +54,7 @@ function addTR(ri) {
     const newChb = document.createElement("INPUT");
     newChb.type = "checkbox";
     newChb.id = "chbSort" + ri;
+    newChb.name = newChb.id
     newChb.className = "chbSort";
     newTD1.appendChild(newChb);
 
@@ -66,13 +74,17 @@ function delTR(ri, li) {
 
 function selChange(objId) {
     const frmSort = document.forms['frmSort'];
+    const selCount = frmSort[1].childElementCount - 2;
     const sel = document.getElementById(objId);
-    const ri = sel.closest('tr').rowIndex;
+    const ri = sel.parentNode.parentNode.rowIndex;
     const li = frmSort.querySelector('tbody').lastElementChild.rowIndex;
 
-    if (sel.value && ri === li) {
+    if (sel.value && ri === li && ri < selCount) {
         addTR(ri + 1);
     } else if (!sel.value && ri < li) {
         delTR(ri, li);
+    } else if (ri < li) {
+        delTR(ri, li);
+        addTR(ri + 1);
     }
 }

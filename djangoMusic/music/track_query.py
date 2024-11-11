@@ -4,7 +4,7 @@ from .author_query import get_author_query
 
 def track_query(cf: list, rel: int = 0, where: str = '') -> str:
     """
-    Формирование tables-фрагмента SQL-запроса для объекта ShowResult.
+    Формирование tables-фрагмента SQL-запроса для функции get_django_pager.
     :param cf: Список элементов HTML-формы, содержащих соответствующие имена полей в БД.
         Является результатом функции cur_fields.
     :param rel: Индекс связи (1, 5, 8, 9, 10, 11). Используется для выключения удаляемой сущности при отображении связи.

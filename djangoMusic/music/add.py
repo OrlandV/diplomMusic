@@ -1,3 +1,6 @@
+"""
+Модуль с функциями, выполняющими непосредственное добавление записей в базу данных.
+"""
 from django.db import connection
 from re import escape
 from .fields import fields

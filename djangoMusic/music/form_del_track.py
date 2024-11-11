@@ -1,3 +1,6 @@
+"""
+Представление страницы «Удаление трека» по адресу /music/del/track/<int:_id>/.
+"""
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string

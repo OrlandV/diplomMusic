@@ -3,6 +3,16 @@ from .fields import fields
 
 def get_author_query(af: list, mode: int | str, _get: dict | None = None, select: bool = True,
                      index: int = 1) -> str | list:
+    """
+    Формирование tables-фрагмента SQL-запроса для функции get_django_pager.
+    :param af: Список элементов HTML-формы, содержащих соответствующие имена полей в БД.
+        Является результатом функции cur_fields.
+    :param mode: Номер или имя режима запроса.
+    :param _get: Словарь GET-параметров.
+    :param select: Флаг обёртки "(SELECT …) AS sel_". Выключается в инициализации объекта Author.
+    :param index: Индекс роли (1 — вокалист, 8 — поэт, 9 — композитор, 10 — аранжировщик).
+    :return: Строка фрагмента SQL-запроса.
+    """
     f0 = af[0][2]  # id
     f1 = af[1][2]  # name_original
     f2 = af[2][2]  # name_romaji

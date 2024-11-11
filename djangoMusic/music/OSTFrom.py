@@ -3,6 +3,12 @@ from .ISPager.dict_fetch_all import dict_fetch_all
 
 
 class OSTFrom:
+    """
+    Класс «Музыка из» (ОСТ) для упрощения подстановки данных в форму правки
+    или вывода полного представления при удалении.
+    :param cf: Список полей — результат функции cur_fields.
+    :param oid: ID ОСТа.
+    """
     def __init__(self, cf: list, oid: int | bool = False):
         item = self._get_items(cf, oid)
         self.id = oid or item[cf[0][2]]

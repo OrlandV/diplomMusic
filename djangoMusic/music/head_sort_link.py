@@ -6,7 +6,7 @@ def head_sort_link(request, params: str, field: list) -> tuple[str, str]:
     """
     Формирование URI-запроса сортировки для заголовка колонки таблицы + текста заголовка.
     :param request: Объект request.
-    :param params: Строка GET-параметров объекта ShowResult (ShowResult().getParams()).
+    :param params: Строка GET-параметров объекта пагинатора (ISPager.Pager.getParams()).
     :param field: Элемент списка fields().
     :return: Кортеж из строки URI-запроса и заголовка колонки.
     """
@@ -33,7 +33,7 @@ def django_head_sort_link(request, params: str, field: list) -> tuple[str, str]:
     Формирование URI-запроса сортировки для заголовка колонки таблицы + текста заголовка.
     Аналог функции head_sort_link, в котором вместо urllib.parse используется django.http.QueryDict.
     :param request: Объект request.
-    :param params: Строка GET-параметров объекта ShowResult (ShowResult().getParams()).
+    :param params: Строка GET-параметров объекта пагинатора (ISPager.Pager.getParams()).
     :param field: Элемент списка fields().
     :return: Кортеж из строки URI-запроса и заголовка колонки.
     """
