@@ -1,10 +1,13 @@
 # Django Music
 
+![Static Badge](https://img.shields.io/badge/MySQL-8.0.33-%234479A1) ![Static Badge](https://img.shields.io/badge/PHP-7.4.15-%23777BB4) ![Static Badge](https://img.shields.io/badge/HTML-5-%23E34F26) ![Static Badge](https://img.shields.io/badge/CSS-3-%231572B6) ![Static Badge](https://img.shields.io/badge/JavaScript-_-%23F7DF1E) ![Static Badge](https://img.shields.io/badge/SQL-_-%23000000) ![Static Badge](https://img.shields.io/badge/Python-3.12-%233776AB) ![Static Badge](https://img.shields.io/badge/Django-5.1.2-%23092E20) ![Static Badge](https://img.shields.io/badge/mysqlclient-2.2.5-blue)
+---
+
 Django-приложение (т.е. веб-приложение) для работы с базой данных MySQL «Музыка».
 
 Дипломный проект по курсу «Python-разработчик».
 
-Цель проекта: реализация веб-приложения на языке Python для работы с ранее разработанной в СУБД MySQL базой данных.
+Цель проекта: реализация веб-приложения на языке Python для работы с ранее разработанной в СУБД MySQL базой данных и работающей с PHP-приложением.
 
 Задачи, выполняемые приложением:
 
